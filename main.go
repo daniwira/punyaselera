@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"punyaselera/auth"
 	"punyaselera/handler"
 	"punyaselera/user"
 
@@ -20,10 +21,11 @@ func main() {
 
 	userRepository := user.NewRepository(db)
 	userService := user.NewService(userRepository)
+	authService := auth.NewService()
 
-	// userService.SaveAvatar(4, "images/profile.png")
+	// fmt.Println(authService.GenerateToken(1001))
 
-	userHandler := handler.NewUserHandler(userService)
+	userHandler := handler.NewUserHandler(userService, authService)
 
 	router := gin.Default()
 	api := router.Group("/api/v1")
